@@ -20,3 +20,11 @@ As a user in Javascript ad JQuery I need to create the game.
 - If a man scores change the score.
 - Switch off inings.
 - Check to see who won after 3 innings.
+
+
+## sources
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt
+-helped me with parseInt()
+
+http://stackoverflow.com/questions/6001149/how-to-execute-a-method-passed-as-parameter-to-function
+- tought me how to call a function as a parameter

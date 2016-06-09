@@ -6,17 +6,19 @@ var strikes= 0
 var runnerOnFirst=false
 var runnerOnSecond=false
 var runnerOnThird=false
-var runsCom= 0
-var runsUser=0
+var comRuns= 0
+var userRuns=0
+var runs=0
 //1. make a function to accept the input from the user
 //put in the chatbox
-  function userInput(){
+  function userInput(atBat){
     $('button').click(function(event) {
       var userChoices=[1, 2, 3, 4]
       userChoice=parseInt($('input').val());
       if (userChoices.includes(userChoice)){
          $('input').val("");
-         pitch(userChoice, computerInput());
+         var runsAfterInning= atBat();
+         return runsAfterInning
       } else{
         alert("not a valid input! we only accpet a 1, 2, 3 or 4");
         $('input').val("");
@@ -34,8 +36,9 @@ var runsUser=0
 //3. make a function that compares the two number and gives an out come
   function  pitch(batter, pitcher){
     if (pitcher===batter){
+      strikes=0;
       if (runnerOnThird){
-        runsUser+=1;
+        runs+=1;
         runnerOnThird=false;
       };
       if (batter===1){
@@ -52,7 +55,7 @@ var runsUser=0
       } else if (batter===2){
         console.log("double!");
         if (runnerOnSecond){
-          runsUser+=1;
+          runs+=1;
           runnerOnSecond=false;
         } ;
         if (runnerOnFirst){
@@ -63,56 +66,83 @@ var runsUser=0
       } else if (batter===3){
         console.log("triple!");
         if (runnerOnSecond){
-          runsUser+=1;
+          runs+=1;
           runnerOnSecond=false;
         };
         if (runnerOnFirst){
-          runsUser+=1;
+          runs+=1;
           runnerOnFirst=false;
         };
         runnerOnThird=true;
       } else {
         console.log("Home Run!");
         if (runnerOnSecond){
-          runsUser+=1;
+          runs+=1;
           runnerOnSecond=false;
         };
         if (runnerOnFirst){
-          runsUser+=1;
+          runs+=1;
           runnerOnFirst=false;
         }
-        runsUser+=1;
+        runs+=1;
       }
     }else if (batter > pitcher) {
       console.log (batter+ ' '+pitcher+ ' '+ 'out');
+      outs+=1;
+      strikes=0;
     } else{
       console.log (batter+ ' '+pitcher+ ' '+ 'strike');
+      strikes+=1;
+      if (strikes===3){
+        console.log("three strikes your out!")
+        outs+=1;
+        strikes=0;
+      }
     }
+    if (outs===3){
+      console.log("three outs switch sides!")
+      console.log(runs);
+      return runs;
+    }
+  }
+  function userAtBat(){
+    pitch(userChoice, computerInput());
+  }
+  function comAtBat(){
+    pitch(computerInput(), userChoice);
   }
   // if same number return what the hit was
   // if pitcher was higher than batter give out
   //if batter was higher than pitch give strike
   //have all these things reflect on the scoreboard
   //put thee things in the chatbox
-
-//4. make a function that retur the number of bases the runners move
   //add the hit (single=1, double=2,triple=3, homerun=4) to the baserunners
   // if the the base number is 4 or higher add a score
   //else put the runners at the right base
   //have it reflect on the scoreboard and field
+  //make function(or if else statment) that checks strikes and return if out or not
 
 //5. make a function that switches batter and pitcher
   //every three outs switch the batter and pitcher
   //have it refelct on the scoreboard
+  function innings(){
+    inNum= parseInt(prompt("before we start how many innnings would you like to play?"));
+    for(let i=0; i<= inNum; i++){
+      if(i % 2===0){
+        console.log("User at bat!"+ userRuns+' '+comRuns);
+        userRuns+= userInput(userAtBat);
+      } else{
+        console.log("Computer at bat!"+ userRuns+' '+comRuns);
+        comRuns+= userInput(comAtBat);
+      }
+    }
+    console.log("final score is" + " " + userRuns + " to " + comRuns)
+  }
 
 
-//6. make function(or if else statment) that checks strikes and return if out or not
-  //have ut reflect on socreboard
-
-//7. make a function that checks to see who won
+//6. make a function that checks to see who won
   //after three innings check
   //who ever has more runs they win
   //alert the user know
-userInput();
+innings();
 });
-
