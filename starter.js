@@ -10,6 +10,7 @@ var comRuns= 0;
 var userRuns=0;
 var runs=0;
 var innings=0;
+var totalOuts=0
 //1. make a function to accept the input from the user
 //put in the chatbox
   function userInput(){
@@ -36,7 +37,6 @@ var innings=0;
 //3. make a function that compares the two number and gives an out come
   function  pitch(batter, pitcher){
     innings += (.5)
-    var inNum= parseInt(prompt("before we start how many innnings would you like to play?"));
     if (inNum===innings){
       console.log(gameOver());
     }
@@ -106,6 +106,7 @@ var innings=0;
     }
     if (outs===3){
       console.log("three outs switch sides!");
+      totalOuts+=3
       outs===0
       if (batter=== userChoice){
         pitch(pitcher, batter);
@@ -113,7 +114,7 @@ var innings=0;
     }
   }
   function userAtBat(){
-    pitch(userInput(), computerInput());
+    pitch(userChoice, computerInput());
   }
   function comAtBat(){
     pitch(computerInput(), userChoice);
@@ -145,7 +146,8 @@ var innings=0;
       return "Computer won! :("
     }
   }
-userAtBat();
+var inNum= parseInt(prompt("before we start how many innnings would you like to play?"));
+userInput(userAtBat());
 });
 
 
