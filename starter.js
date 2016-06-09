@@ -2,6 +2,7 @@ $(document).ready(function(){
   console.log("loaded")
 
 var outs= 0;
+var totalOuts=0;
 var strikes= 0;
 var runnerOnFirst=false;
 var runnerOnSecond=false;
@@ -43,6 +44,7 @@ var switchSides= false;
     }
     if (pitcher===batter){
       strikes=0;
+      $('.strikes').removeClass('yellow')
       if (runnerOnThird){
         runs+=1;
         runnerOnThird=false;
@@ -106,22 +108,28 @@ var switchSides= false;
       }
     }
     if (outs===3){
-      strikes= 0;
-      runnerOnFirst=false;
-      runnerOnSecond=false;
-      runnerOnThird=false;
-      if (batter===userChoice){
-        userRuns+= runs;
-        console.log("user has " +userRuns+ ' and computer has ' + comRuns);
-        switchSides= true;
+      if (totalOuts===inNum){
+        console.log("Game Over");
+        $('button').off();
       } else{
-        comRuns+= runs;
-        console.log("user has "+ userRuns+ ' and computer has ' + comRuns);
-        switchSides= false;
+        totalOuts+=3
+        strikes= 0;
+        runnerOnFirst=false;
+        runnerOnSecond=false;
+        runnerOnThird=false;
+        if (batter===userChoice){
+          userRuns+= runs;
+          console.log("user has " +userRuns+ ' and computer has ' + comRuns);
+          switchSides= true;
+        } else{
+          comRuns+= runs;
+          console.log("user has "+ userRuns+ ' and computer has ' + comRuns);
+          switchSides= false;
+        }
+        runs= 0;
+        console.log("three outs switch sides!");
+        outs=0;
       }
-      runs= 0;
-      console.log("three outs switch sides!");
-      outs=0
     }
 
   }
@@ -164,5 +172,7 @@ var switchSides= false;
   //after three innings check
   //who ever has more runs they win
   //alert the user know
+var inNum= parseInt(prompt("before we start how many innnings would you like to play?"))*6;
+
 userInput(userAtBat);
 });

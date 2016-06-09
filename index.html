@@ -7,40 +7,48 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
   <link rel="stylesheet" href="style.css">
   <script type='text/javascript' src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-  <script type='text/javascript' src= 'starter.js'></script>
+  <!-- <script type='text/javascript' src= 'starter.js'></script> -->
 </head>
 <body>
+<div class="container">
+  <div id="inputs">
+    <input type="text">
+    <button>Enter</button>
+  </div><!-- //end inputs -->
   <div id="scoreboard">
     <div class="board" id="inning">
-      <p>inning:</p>
-      <p id="inning-number"></p>
-    </div>
+      <p>Inning:</p>
+      <p id="inning-number"> 1</p>
+    </div><!-- //inning -->
     <div class="board" id="computer-score">
-      <p> Computer Score</p>
-    </div>
+      <p> Computer Score:</p>
+      <p>2</p>
+    </div><!-- //computer-score -->
     <div class="board" id="player-score">
-      <p>Player Score</p>
-    </div>
+      <p>Player Score:</p>
+      <p>2</p>
+    </div><!-- //player-score -->
     <div class="board" id="outs">
-      <p>OUTS</p>
-      <div class="circle"></div>
-      <div class="circle"></div>
-    </div>
+      <p>OUTS:</p>
+      <div id="out1" class="circle"></div>
+      <div  id="out2" class="circle"></div>
+    </div><!-- //outs -->
     <div class="board" id="strikes">
       <p>STRIKES:</p>
-      <div class="circle"></div>
-      <div class="circle"></div>
-    </div>
-  </div>
-  <div id= "field">
-    <div class="bases" id="home"></div>
-    <div class="bases" id="first"></div>
-    <div class="bases" id="second"></div>
-    <div class="bases" id="third"></div>
-  </div>
-  <div class="chat-container">
-  </div>
-  <input type="text">
-    <button>Enter</button>
+      <div id="strike1" class="circle strikes"></div>
+      <div  id="strike1" class="circle strikes"></div>
+    </div><!-- //strikes -->
+  </div><!-- //end scoreboard -->
+  <div class='outer-field'>
+    <div class='inner-field'>
+      <div class="bases" id="second"></div>
+      <div class=" bases" id="third"></div>
+      <div class="bases" id="first"></div>
+      <div class="bases" id="home"></div>
+    </div><!-- //end inner-field -->
+  </div><!-- //end outer-field -->
+  <div class="chats">
+  </div> <!-- end of chatbox -->
+</div><!-- // end container -->
 </body>
 </html>
