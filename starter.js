@@ -1,14 +1,15 @@
 $(document).ready(function(){
   console.log("loaded")
 
-var outs= 0
-var strikes= 0
-var runnerOnFirst=false
-var runnerOnSecond=false
-var runnerOnThird=false
-var comRuns= 0
-var userRuns=0
-var runs=0
+var outs= 0;
+var strikes= 0;
+var runnerOnFirst=false;
+var runnerOnSecond=false;
+var runnerOnThird=false;
+var comRuns= 0;
+var userRuns=0;
+var runs=0;
+var switchSides= false;
 //1. make a function to accept the input from the user
 //put in the chatbox
   function userInput(atBat){
@@ -20,7 +21,7 @@ var runs=0
          var runsAfterInning= atBat();
          return runsAfterInning
       } else{
-        alert(userChoice+ "is not a valid input! we only accpet a 1, 2, 3 or 4");
+        alert(userChoice+ " is not a valid input! we only accpet a 1, 2, 3 or 4");
         $('input').val("");
       }
     });
@@ -35,6 +36,11 @@ var runs=0
 
 //3. make a function that compares the two number and gives an out come
   function  pitch(batter, pitcher){
+    if (switchSides){
+      var newPitcher=batter;
+      var batter=pitcher;
+      var pitcher=newPitcher;
+    }
     if (pitcher===batter){
       strikes=0;
       if (runnerOnThird){
@@ -94,15 +100,30 @@ var runs=0
       console.log (batter+ ' '+pitcher+ ' '+ 'strike');
       strikes+=1;
       if (strikes===3){
-        console.log("three strikes your out!")
+        console.log("three strikes your out!");
         outs+=1;
         strikes=0;
       }
     }
     if (outs===3){
-      console.log("three outs switch sides!")
-
+      strikes= 0;
+      runnerOnFirst=false;
+      runnerOnSecond=false;
+      runnerOnThird=false;
+      if (batter===userChoice){
+        userRuns+= runs;
+        console.log("user has " +userRuns+ ' and computer has ' + comRuns);
+        switchSides= true;
+      } else{
+        comRuns+= runs;
+        console.log("user has "+ userRuns+ ' and computer has ' + comRuns);
+        switchSides= false;
+      }
+      runs= 0;
+      console.log("three outs switch sides!");
+      outs=0
     }
+
   }
   function userAtBat(){
     pitch(userChoice, computerInput());
@@ -143,5 +164,5 @@ var runs=0
   //after three innings check
   //who ever has more runs they win
   //alert the user know
-innings();
+userInput(userAtBat);
 });
