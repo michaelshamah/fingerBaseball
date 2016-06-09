@@ -20,7 +20,7 @@ var runs=0
          var runsAfterInning= atBat();
          return runsAfterInning
       } else{
-        alert("not a valid input! we only accpet a 1, 2, 3 or 4");
+        alert(userChoice+ "is not a valid input! we only accpet a 1, 2, 3 or 4");
         $('input').val("");
       }
     });
@@ -34,10 +34,7 @@ var runs=0
 
 
 //3. make a function that compares the two number and gives an out come
-  function  pitch(batter, pitcher, inning){
-    if (inning= inNum){
-      console.log( "The Final Score is computer "+comRuns "and User "+ userRuns);
-    }
+  function  pitch(batter, pitcher){
     if (pitcher===batter){
       strikes=0;
       if (runnerOnThird){
@@ -52,18 +49,20 @@ var runs=0
         };
         if (runnerOnFirst){
           runnerOnSecond=true;
-          runnerOnFirst=true;
+          runnerOnFirst=false;
         };
+        runnerOnFirst=true;
       } else if (batter===2){
         console.log("double!");
         if (runnerOnSecond){
           runs+=1;
-          runnerOnSecond=true;
+          runnerOnSecond=false;
         } ;
         if (runnerOnFirst){
           runnerOnThird=true;
           runnerOnFirst=false;
         };
+        runnerOnSecond=true;
       } else if (batter===3){
         console.log("triple!");
         if (runnerOnSecond){
@@ -101,28 +100,16 @@ var runs=0
       }
     }
     if (outs===3){
-      if (batter===userChoice){
-        userRuns+= runs
-      } else{
-        comRuns+= runs
-      }
-      var runnerOnFirst=false
-      var runnerOnSecond=false
-      var runnerOnThird=false
-      outs=0
       console.log("three outs switch sides!")
-      pitch(pitcher,batter, (inning+.5))
 
     }
   }
-  // function userAtBat(){
-  //   pitch(userChoice, computerInput());
-  // }
-  // function comAtBat(){
-  //   pitch(computerInput(), userChoice);
-  // }
-
-
+  function userAtBat(){
+    pitch(userChoice, computerInput());
+  }
+  function comAtBat(){
+    pitch(computerInput(), userChoice);
+  }
   // if same number return what the hit was
   // if pitcher was higher than batter give out
   //if batter was higher than pitch give strike
@@ -139,8 +126,17 @@ var runs=0
   //have it refelct on the scoreboard
   function innings(){
     inNum= parseInt(prompt("before we start how many innnings would you like to play?"));
-    pitch(userChoice, computerInput(), .5);
-   }
+    for(let i=0; i<= inNum; i++){
+      if(i % 2===0){
+        console.log("User at bat!"+ userRuns+' '+comRuns);
+        userRuns+= userInput(userAtBat);
+      } else{
+        console.log("Computer at bat!"+ userRuns+' '+comRuns);
+        comRuns+= userInput(comAtBat);
+      }
+    }
+    console.log("final score is" + " " + userRuns + " to " + comRuns)
+  }
 
 
 //6. make a function that checks to see who won
