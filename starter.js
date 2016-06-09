@@ -1,24 +1,24 @@
 $(document).ready(function(){
   console.log("loaded")
 
-var outs= 0
-var strikes= 0
-var runnerOnFirst=false
-var runnerOnSecond=false
-var runnerOnThird=false
-var comRuns= 0
-var userRuns=0
-var runs=0
+var outs= 0;
+var strikes= 0;
+var runnerOnFirst=false;
+var runnerOnSecond=false;
+var runnerOnThird=false;
+var comRuns= 0;
+var userRuns=0;
+var runs=0;
+var innings=0;
 //1. make a function to accept the input from the user
 //put in the chatbox
-  function userInput(atBat){
+  function userInput(){
     $('button').click(function(event) {
       var userChoices=[1, 2, 3, 4]
       userChoice=parseInt($('input').val());
       if (userChoices.includes(userChoice)){
          $('input').val("");
-         var runsAfterInning= atBat();
-         return runsAfterInning
+         return userChoice;
       } else{
         alert(userChoice+ "is not a valid input! we only accpet a 1, 2, 3 or 4");
         $('input').val("");
@@ -35,6 +35,11 @@ var runs=0
 
 //3. make a function that compares the two number and gives an out come
   function  pitch(batter, pitcher){
+    innings += (.5)
+    var inNum= parseInt(prompt("before we start how many innnings would you like to play?"));
+    if (inNum===innings){
+      console.log(gameOver());
+    }
     if (pitcher===batter){
       strikes=0;
       if (runnerOnThird){
@@ -100,12 +105,15 @@ var runs=0
       }
     }
     if (outs===3){
-      console.log("three outs switch sides!")
-
+      console.log("three outs switch sides!");
+      outs===0
+      if (batter=== userChoice){
+        pitch(pitcher, batter);
+      }
     }
   }
   function userAtBat(){
-    pitch(userChoice, computerInput());
+    pitch(userInput(), computerInput());
   }
   function comAtBat(){
     pitch(computerInput(), userChoice);
@@ -124,24 +132,23 @@ var runs=0
 //5. make a function that switches batter and pitcher
   //every three outs switch the batter and pitcher
   //have it refelct on the scoreboard
-  function innings(){
-    inNum= parseInt(prompt("before we start how many innnings would you like to play?"));
-    for(let i=0; i<= inNum; i++){
-      if(i % 2===0){
-        console.log("User at bat!"+ userRuns+' '+comRuns);
-        userRuns+= userInput(userAtBat);
-      } else{
-        console.log("Computer at bat!"+ userRuns+' '+comRuns);
-        comRuns+= userInput(comAtBat);
-      }
-    }
-    console.log("final score is" + " " + userRuns + " to " + comRuns)
-  }
 
 
 //6. make a function that checks to see who won
   //after three innings check
   //who ever has more runs they win
   //alert the user know
-innings();
+  function Gameover(){
+    if (userRuns> comRuns){
+      return "User won!"
+    } else{
+      return "Computer won! :("
+    }
+  }
+userAtBat();
 });
+
+
+
+
+
