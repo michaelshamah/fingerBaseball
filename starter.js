@@ -1,7 +1,7 @@
 $(document).ready(function(){
   console.log("loaded")
 
-var outs= 0;
+
 var totalOuts=0;
 var strikes= 0;
 var runnerOnFirst=false;
@@ -38,17 +38,18 @@ var switchSides= false;
 //3. make a function that compares the two number and gives an out come
   function  pitch(batter, pitcher){
     if (switchSides){
+      var switchSides=true
       var newPitcher=batter;
       var batter=pitcher;
       var pitcher=newPitcher;
     }
-    if ($('.first').hasClass('yellow')){
+    if ($('#first').hasClass('yellow')){
       var runnerOnFirst=true;
     }
-    if ($('.second').hasClass('yellow')){
+    if ($('#second').hasClass('yellow')){
       var runnerOnSecond=true;
     }
-    if ($('.third').hasClass('yellow')){
+    if ($('#third').hasClass('yellow')){
       var runnerOnThird=true;
     }
     if (pitcher===batter){
@@ -60,6 +61,8 @@ var switchSides= false;
       };
       if (batter===1){
         console.log("single!");
+        $('.chats').prepend('<p>');
+      ($('.chats p').eq(0)).text("you both put out 1, batter hit a single! Each runner moves a base.");
         if (runnerOnSecond){
           $('#third').addClass('yellow');
           $('#second').removeClass('yellow');
@@ -68,9 +71,11 @@ var switchSides= false;
           $('#second').addClass('yellow');
           $('#first').removeClass('yellow');
         };
-        $('#first').addClass('yellow');
+        $('#first').fadeIn().addClass('yellow');
       } else if (batter===2){
         console.log("double!");
+        $('.chats').prepend('<p>');
+      ($('.chats p').eq(0)).text("you both put out 2, batter hit a double! Each runner moves two bases.");
         if (runnerOnSecond){
           runs+=1;
           $('#second').removeClass('yellow');
@@ -82,6 +87,8 @@ var switchSides= false;
         $('#second').addClass('yellow');
       } else if (batter===3){
         console.log("triple!");
+        $('.chats').prepend('<p>');
+      ($('.chats p').eq(0)).text("you both put out 3, batter hit a triple! Each runner moves three bases.");
         $('#third').addClass('yellow');
         if (runnerOnSecond){
           runs+=1;
@@ -94,6 +101,8 @@ var switchSides= false;
 
       } else {
         console.log("Home Run!");
+        $('.chats').prepend('<p>');
+        ($('.chats p').eq(0)).text("you both put out 4, batter hit a Home Run! Everyone scores.");
         if (runnerOnSecond){
           runs+=1;
           $('#second').removeClass('yellow');
@@ -102,31 +111,36 @@ var switchSides= false;
           runs+=1;
           $('#first').addClass('yellow');
         }
-        runs+=1;
+        ;
       }
     }else if (batter > pitcher) {
+      var out3= false
       console.log (batter+ ' '+pitcher+ ' '+ 'out');
+      $('.chats').prepend('<p>');
+      ($('.chats p').eq(0)).text("The batter put out a "+ batter+ "and the pitcher put out a "+pitcher+" it's a out.");
       $('.strikes').removeClass('yellow');
-      if ($('#out1').hasClass('yellow')){
+      if ($('#out1').hasClass('yellow') && (!($('#out2').hasClass('yellow')))){
         $('#out2').addClass('yellow');
-      } else{
+      } else if ($('#out2').hasClass('yellow')){
+        var out3= true
+      } else {
         $('#out1').addClass('yellow');
       }
-      outs+=1;
-      strikes=0;
     } else{
+      $('.chats').prepend('<p>');
+      ($('.chats p').eq(0)).text("The batter put out a "+ batter+ "and the pitcher put out a "+pitcher+" it's a strike.");
       console.log (batter+ ' '+pitcher+ ' '+ 'strike');
-      strikes+=1;
-      if (strikes===3){
+      if ($('#strike2').hasClass('yellow')){
         console.log("three strikes your out!");
-        outs+=1;
-        strikes=0;
+        var strikes=0;
         $('.strikes').removeClass('yellow');
-        if ($('#out1').hasClass('yellow')){
-          ('#out2').addClass('yellow');
-        } else{
-          $('#out1').addClass('yellow');
-        }
+        if ($('#out1').hasClass('yellow') && (!($('#out2').hasClass('yellow')))){
+        $('#out2').addClass('yellow');
+      } else if ($('#out2').hasClass('yellow')){
+        var out3= true
+      } else {
+        $('#out1').addClass('yellow');
+      }
       }else{
         if ($('#strike1').hasClass('yellow')){
           $('#strike2').addClass('yellow');
@@ -135,29 +149,36 @@ var switchSides= false;
         }
       }
     }
-    if (outs===3){
-      $('.out').removeClass('yellow');
+    if (out3){
+      $('.circle').removeClass('yellow');
+      totalOuts+=3
+      console.log(totalOuts)
       if (totalOuts===inNum){
-        console.log("Game Over");
+        $('.chats').prepend('<p>');
+        ($('.chats p').eq(0)).text("Game over!");
         $('button').off();
       } else{
-        totalOuts+=3
-        strikes= 0;
+        var strikes= 0;
         $('#first').removeClass('yellow');
         $('#second').removeClass('yellow');
         $('#third').removeClass('yellow');
         if (batter===userChoice){
           userRuns+= runs;
-          console.log("user has " +userRuns+ ' and computer has ' + comRuns);
-          switchSides= true;
+          $('.chats').prepend('<p>');
+        ($('.chats p').eq(0)).text("user has " +userRuns+ 'runs and computer has ' + comRuns+' runs');
+          var switchSides= true
+          return switchSides;
         } else{
           comRuns+= runs;
-          console.log("user has "+ userRuns+ ' and computer has ' + comRuns);
-          switchSides= false;
+          $('.chats').prepend('<p>');
+        ($('.chats p').eq(0)).text("user has "+ userRuns+ ' and computer has ' + comRuns);
+          return false;
         }
         runs= 0;
         console.log("three outs switch sides!");
-        outs=0;
+        $('.chats').prepend('<p>');
+        ($('.chats p').eq(0)).text("three outs switch sides!");
+
       }
     }
   }
@@ -201,6 +222,6 @@ var switchSides= false;
   //who ever has more runs they win
   //alert the user know
 var inNum= parseInt(prompt("before we start how many innnings would you like to play?"))*6;
+ userInput(userAtBat);
 
-userInput(userAtBat);
 });

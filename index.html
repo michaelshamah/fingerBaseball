@@ -22,13 +22,13 @@
     </div><!-- //inning -->
     <div class="board" id="computer-score">
       <p> Computer Score:</p>
-      <p>2</p>
+      <p id="top-score" data-cscore="0"></p>
     </div><!-- //computer-score -->
     <div class="board" id="player-score">
       <p>Player Score:</p>
-      <p>2</p>
+      <p id="bottom-score" data-pscore="0"></p>
     </div><!-- //player-score -->
-    <div class="board" id="outs">
+    <div class="board" id="outs" data-outs='0'>
       <p>OUTS:</p>
       <div id="out1" class="circle"></div>
       <div  id="out2" class="circle"></div>
@@ -47,8 +47,11 @@
       <div class="bases" id="home"></div>
     </div><!-- //end inner-field -->
   </div><!-- //end outer-field -->
+  <div class='row'>
   <div class="chats">
   </div> <!-- end of chatbox -->
+  </div>
+  <div id="out3"> </div>
 </div><!-- // end container -->
 </body>
 </html>

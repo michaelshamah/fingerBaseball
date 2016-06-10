@@ -28,3 +28,5 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 http://stackoverflow.com/questions/6001149/how-to-execute-a-method-passed-as-parameter-to-function
 - tought me how to call a function as a parameter
+http://www.cssportal.com/css3-shapes/
+-tought me how to make a diamond in css

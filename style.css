@@ -36,7 +36,7 @@ p {
   padding: 5px;
 }
 .yellow{
-  background-color: yellow;
+  background-color: yellow!important;
 }
 #inputs {
   float: right;
@@ -52,10 +52,23 @@ p {
 }
 .inner-field {
   background-color: tan;
-  max-width: 30%;
+  max-width: 200px;
   margin: 0 auto;
+  border: 100px;
   min-height: 200px;
   position: relative;
+   /* Rotate */
+   -webkit-transform: rotate(-45deg);
+   -moz-transform: rotate(-45deg);
+   -ms-transform: rotate(-45deg);
+   -o-transform: rotate(-45deg);
+   transform: rotate(-45deg);
+   /* Rotate Origin */
+   -webkit-transform-origin: 0 100%;
+   -moz-transform-origin: 0 100%;
+   -ms-transform-origin: 0 100%;
+   -o-transform-origin: 0 100%;
+   transform-origin: 0 100%;
 }
 .row{
   padding: 10px;
@@ -64,31 +77,38 @@ p {
 
 #second{
   top: 0;
-  left: 42%;
+  right: 0;
 }
 
 #first {
   right: 0;
-  top: 42%;
+  bottom: 0;
 }
 
 #home{
   bottom: 0;
-  left: 42%
+  left: 0
 }
 
 #third{
   left: 0;
-  top: 42%;
+  top: 0;
 }
 .chats{
-  height: 400px;
+  min-height: 200px;
+  bottom: 0;
   max-width: 80%;
   overflow: auto;
-  background-color: rgb(127,127,127, 1.0)
-  margin-top: 50px;
+  background-color: rgb(127,127,127);
+  margin: 0 auto;
   color: white;
-  font-size: 30px
+}
+.outer-field{
+  margin-top: 100px;
+}
+.chats p{
+  display: block;
+  font-size: 15px;
 }
 /*add a class for if a runner ison base and chane the color*/
 
