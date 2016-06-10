@@ -1,6 +1,8 @@
 /*make it look like the wire frame*/
 body{
-  background-image: 'images.jpg';
+  background-image: url('stadium.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 .container{
   position: relative;
@@ -42,8 +44,8 @@ p {
 .bases{
   height:30px;
   width: 30px;
-  background-color: white;
   border: 3px;
+  background-color: white;
   border-color: black;
   display: inline-block;
   position: absolute;
@@ -83,8 +85,10 @@ p {
   height: 400px;
   max-width: 80%;
   overflow: auto;
-  background-color: gray;
+  background-color: rgb(127,127,127, 1.0)
   margin-top: 50px;
+  color: white;
+  font-size: 30px
 }
 /*add a class for if a runner ison base and chane the color*/
 

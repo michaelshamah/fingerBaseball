@@ -42,60 +42,76 @@ var switchSides= false;
       var batter=pitcher;
       var pitcher=newPitcher;
     }
+    if ($('.first').hasClass('yellow')){
+      var runnerOnFirst=true;
+    }
+    if ($('.second').hasClass('yellow')){
+      var runnerOnSecond=true;
+    }
+    if ($('.third').hasClass('yellow')){
+      var runnerOnThird=true;
+    }
     if (pitcher===batter){
       strikes=0;
-      $('.strikes').removeClass('yellow')
+      $('.strikes').removeClass('yellow');
       if (runnerOnThird){
         runs+=1;
-        runnerOnThird=false;
+        $('#third').removeClass('yellow');
       };
       if (batter===1){
         console.log("single!");
         if (runnerOnSecond){
-          runnerOnThird=true;
-          runnerOnSecond=false;
+          $('#third').addClass('yellow');
+          $('#second').removeClass('yellow');
         };
         if (runnerOnFirst){
-          runnerOnSecond=true;
-          runnerOnFirst=false;
+          $('#second').addClass('yellow');
+          $('#first').removeClass('yellow');
         };
-        runnerOnFirst=true;
+        $('#first').addClass('yellow');
       } else if (batter===2){
         console.log("double!");
         if (runnerOnSecond){
           runs+=1;
-          runnerOnSecond=false;
+          $('#second').removeClass('yellow');
         } ;
         if (runnerOnFirst){
-          runnerOnThird=true;
-          runnerOnFirst=false;
+          $('#third').addClass('yellow');
+          $('#first').removeClass('yellow');
         };
-        runnerOnSecond=true;
+        $('#second').addClass('yellow');
       } else if (batter===3){
         console.log("triple!");
+        $('#third').addClass('yellow');
         if (runnerOnSecond){
           runs+=1;
-          runnerOnSecond=false;
+          $('#second').removeClass('yellow');
         };
         if (runnerOnFirst){
           runs+=1;
-          runnerOnFirst=false;
+          $('#first').removeClass('yellow');
         };
-        runnerOnThird=true;
+
       } else {
         console.log("Home Run!");
         if (runnerOnSecond){
           runs+=1;
-          runnerOnSecond=false;
+          $('#second').removeClass('yellow');
         };
         if (runnerOnFirst){
           runs+=1;
-          runnerOnFirst=false;
+          $('#first').addClass('yellow');
         }
         runs+=1;
       }
     }else if (batter > pitcher) {
       console.log (batter+ ' '+pitcher+ ' '+ 'out');
+      $('.strikes').removeClass('yellow');
+      if ($('#out1').hasClass('yellow')){
+        $('#out2').addClass('yellow');
+      } else{
+        $('#out1').addClass('yellow');
+      }
       outs+=1;
       strikes=0;
     } else{
@@ -105,18 +121,31 @@ var switchSides= false;
         console.log("three strikes your out!");
         outs+=1;
         strikes=0;
+        $('.strikes').removeClass('yellow');
+        if ($('#out1').hasClass('yellow')){
+          ('#out2').addClass('yellow');
+        } else{
+          $('#out1').addClass('yellow');
+        }
+      }else{
+        if ($('#strike1').hasClass('yellow')){
+          $('#strike2').addClass('yellow');
+        } else{
+          $('#strike1').addClass('yellow');
+        }
       }
     }
     if (outs===3){
+      $('.out').removeClass('yellow');
       if (totalOuts===inNum){
         console.log("Game Over");
         $('button').off();
       } else{
         totalOuts+=3
         strikes= 0;
-        runnerOnFirst=false;
-        runnerOnSecond=false;
-        runnerOnThird=false;
+        $('#first').removeClass('yellow');
+        $('#second').removeClass('yellow');
+        $('#third').removeClass('yellow');
         if (batter===userChoice){
           userRuns+= runs;
           console.log("user has " +userRuns+ ' and computer has ' + comRuns);
@@ -131,7 +160,6 @@ var switchSides= false;
         outs=0;
       }
     }
-
   }
   function userAtBat(){
     pitch(userChoice, computerInput());
