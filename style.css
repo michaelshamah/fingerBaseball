@@ -51,24 +51,7 @@ p {
   position: absolute;
 }
 .inner-field {
-  background-color: tan;
-  max-width: 200px;
-  margin: 0 auto;
-  border: 100px;
-  min-height: 200px;
   position: relative;
-   /* Rotate */
-   -webkit-transform: rotate(-45deg);
-   -moz-transform: rotate(-45deg);
-   -ms-transform: rotate(-45deg);
-   -o-transform: rotate(-45deg);
-   transform: rotate(-45deg);
-   /* Rotate Origin */
-   -webkit-transform-origin: 0 100%;
-   -moz-transform-origin: 0 100%;
-   -ms-transform-origin: 0 100%;
-   -o-transform-origin: 0 100%;
-   transform-origin: 0 100%;
 }
 .row{
   padding: 10px;
@@ -77,22 +60,25 @@ p {
 
 #second{
   top: 0;
-  right: 0;
+    left: -15px;
 }
 
 #first {
-  right: 0;
-  bottom: 0;
+  left: 95px;
+  bottom: -134px;
+  z-index: 1;
 }
 
 #home{
-  bottom: 0;
-  left: 0
+  bottom: -251px;
+  left: -15px;
+  z-index: 1;
 }
 
 #third{
-  left: 0;
-  top: 0;
+  right: 95px;
+  bottom: -134px;
+  z-index: 1;
 }
 .chats{
   min-height: 200px;
@@ -103,9 +89,26 @@ p {
   margin: 0 auto;
   color: white;
 }
-.outer-field{
-  margin-top: 100px;
+
+#diamond {
+  width: 0px;
+  height: 0px;
+  border: 120px solid transparent;
+  border-bottom-color: tan;
+  position: relative;
+  top: -120px;
 }
+#diamond:after {
+  content: '';
+  position: absolute;
+  left: -120px;
+  top: 120px;
+  width: 0px;
+  height: 100px;
+  border: 120px solid transparent;
+  border-top-color: tan;
+}
+
 .chats p{
   display: block;
   font-size: 15px;

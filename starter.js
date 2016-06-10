@@ -117,7 +117,7 @@ var switchSides= false;
       var out3= false
       console.log (batter+ ' '+pitcher+ ' '+ 'out');
       $('.chats').prepend('<p>');
-      ($('.chats p').eq(0)).text("The batter put out a "+ batter+ "and the pitcher put out a "+pitcher+" it's a out.");
+      ($('.chats p').eq(0)).text("The batter put out a "+ batter+ " and the pitcher put out a "+pitcher+" it's a out.");
       $('.strikes').removeClass('yellow');
       if ($('#out1').hasClass('yellow') && (!($('#out2').hasClass('yellow')))){
         $('#out2').addClass('yellow');
@@ -128,7 +128,7 @@ var switchSides= false;
       }
     } else{
       $('.chats').prepend('<p>');
-      ($('.chats p').eq(0)).text("The batter put out a "+ batter+ "and the pitcher put out a "+pitcher+" it's a strike.");
+      ($('.chats p').eq(0)).text("The batter put out a "+ batter+ " and the pitcher put out a "+pitcher+" it's a strike.");
       console.log (batter+ ' '+pitcher+ ' '+ 'strike');
       if ($('#strike2').hasClass('yellow')){
         console.log("three strikes your out!");
