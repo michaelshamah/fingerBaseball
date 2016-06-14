@@ -117,6 +117,14 @@ p {
 .red{
   color: red;
 }
+img{
+  display: none;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  margin: -150px -200px;
+}
 /*add a class for if a runner ison base and chane the color*/
 
 

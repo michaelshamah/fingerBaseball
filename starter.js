@@ -10,7 +10,7 @@ var runnerOnThird=false;
 var comRuns= 0;
 var userRuns=0;
 var runs=0;
-var switchSides=false;
+var switchSides=0;
 
   function userInput(atBat){
     $('button').click(function(event) {
@@ -34,11 +34,15 @@ var switchSides=false;
   function inning(){
     $('#inning-number').text("Top 1");
     if (totalOuts%6===0 && totalOuts !== 0){
-      var inning= totalOuts/6;
+      var inning= (totalOuts/6)+1;
       $('#inning-number').text("Top "+inning);
     } else if (totalOuts%3===0 && totalOuts !== 0){
-      var inning= totalOuts/3;
+      if (totalOuts===3){
+        $('#inning-number').text("Bot 1");
+      } else{
+        var inning= (((totalOuts-3)/6)+1);
       $('#inning-number').text("Bot "+inning);
+      }
     }
   }
 
@@ -68,56 +72,56 @@ var switchSides=false;
       if (batter===1){
         $('.chats').prepend('<p>');
         ($('.chats p').eq(0)).text("you both put out 1, batter hit a single! Each runner moves a base.");
+        if (runnerOnThird){
+          $('#third').removeClass('yellow flash animated');
+        }
         if (runnerOnSecond){
-          $('#third').addClass('yellow');
-          $('#second').removeClass('yellow');
+          $('#third').addClass('yellow animate flash');
+          $('#second').removeClass('yellow flash animated');
         };
         if (runnerOnFirst){
-          $('#second').addClass('yellow');
-          $('#first').removeClass('yellow');
+          $('#second').addClass('yellow flash animated');
+          $('#first').removeClass('yellow flash animated');
         };
-        if (runnerOnThird){
-          $('#third').removeClass('yellow');
-        }
-        $('#first').addClass('yellow');
+        $('#first').addClass('yellow flash animated');
       }
 
       if (batter===2){
         $('.chats').prepend('<p>');
         ($('.chats p').eq(0)).text("you both put out 2, batter hit a double! Each runner moves two bases.");
         if (runnerOnThird){
-          $('#third').removeClass('yellow')
+          $('#third').removeClass('yellow flash animated')
           runs+=1
         }
         if (runnerOnSecond){
           runs+=1;
-        $('#second').removeClass('yellow');
+        $('#second').removeClass('yellow flash animated');
         } ;
         if (runnerOnFirst){
-          $('#third').addClass('yellow');
-          $('#first').removeClass('yellow');
+          $('#third').addClass('yellow flash animated');
+          $('#first').removeClass('yellow flash animated');
         };
-        $('#second').addClass('yellow');
+        $('#second').addClass('yellow flash animated');
       }
 
       if (batter===3){
-        $('#third').addClass('yellow');
+        $('#third').addClass('yellow flash animated');
         $('.chats').prepend('<p>');
         ($('.chats p').eq(0)).text("you both put out 3, batter hit a triple! Each runner moves three bases.");
         runs+=1
         if (runnerOnThird){
-          $('#third').removeClass('yellow')
+          $('#third').removeClass('yellow flash animated')
           runs+=1
         }
         if (runnerOnSecond){
           runs+=1;
-          $('#second').removeClass('yellow');
+          $('#second').removeClass('yellow flash animated');
         };
         if (runnerOnFirst){
           runs+=1;
-          $('#first').removeClass('yellow');
+          $('#first').removeClass('yellow flash animated');
         }
-        $('#third').addClass('yellow');
+        $('#third').addClass('yellow flash animated');
       }
 
       if (batter===4){
@@ -126,30 +130,29 @@ var switchSides=false;
         ($('.chats p').eq(0)).text("you both put out 4, batter hit a Home Run! Everyone scores.");
         if (runnerOnSecond){
           runs+=1;
-          $('#second').removeClass('yellow');
+          $('#second').removeClass('yellow flash animated');
         };
         if (runnerOnFirst){
           runs+=1;
-          $('#first').removeClass('yellow');
+          $('#first').removeClass('yellow flash animated');
         }
         if (runnerOnThird){
           runs+=1;
-        $('#first').removeClass('yellow');
+        $('#first').removeClass('yellow flash animated');
         }
       }
 
     } else if (batter > pitcher) {
       var out3= false
-      console.log (batter+ ' '+pitcher+ ' '+ 'out');
       $('.chats').prepend('<p>');
       ($('.chats p').eq(0)).text("The batter put out a "+ batter+ " and the pitcher put out a "+pitcher+" it's a out.");
-      $('.strikes').removeClass('yellow');
+      $('.strikes').removeClass('yellow flash animated');
       if ($('#out1').hasClass('yellow') && (!($('#out2').hasClass('yellow')))){
-        $('#out2').addClass('yellow');
+        $('#out2').addClass('yellow flash animated');
       } else if ($('#out2').hasClass('yellow')){
         var out3= true
       } else {
-        $('#out1').addClass('yellow');
+        $('#out1').addClass('yellow flash animated');
       }
     } else{
       $('.chats').prepend('<p>');
@@ -158,26 +161,25 @@ var switchSides=false;
         $('.chats').prepend('<p>');
         ($('.chats p').eq(0)).text("Three strikes you're out!")
         var strikes=0;
-        $('.strikes').removeClass('yellow');
+        $('.strikes').removeClass('yellow flash animated');
         if ($('#out1').hasClass('yellow') && (!($('#out2').hasClass('yellow')))){
-          $('#out2').addClass('yellow');
+          $('#out2').addClass('yellow flash animated');
         } else if ($('#out2').hasClass('yellow')){
         var out3= true
         } else {
-          $('#out1').addClass('yellow');
+          $('#out1').addClass('yellow flash animated');
         }
       }else{
         if ($('#strike1').hasClass('yellow')){
-          $('#strike2').addClass('yellow');
+          $('#strike2').addClass('yellow flash animated');
         } else{
-          $('#strike1').addClass('yellow');
+          $('#strike1').addClass('yellow flash animated');
         }
       }
     }
     if (out3){
-      $('.circle').removeClass('yellow');
+      $('.circle').removeClass('yellow flash animated');
       totalOuts+=3
-      console.log(totalOuts)
       if (totalOuts===inNum){
         $('.chats').prepend('<p>');
         ($('.chats p').eq(0)).text("Game over!");
@@ -186,34 +188,35 @@ var switchSides=false;
         } else{
           ($('.chats p').eq(0)).text("Sorry, your skills could not match the computer. Better luck next time!");
         }
-        $('button').off();
+        $('button').css({display: 'none'});
+        $('input').css({display: 'none'});
       } else{
         $('.chats').prepend('<p>');
         ($('.chats p').eq(0)).text("three outs switch sides!");
         var strikes= 0;
       }
-      $('#first').removeClass('yellow');
-      $('#second').removeClass('yellow');
-      $('#third').removeClass('yellow');
+      $('#first').removeClass('yellow flash animated');
+      $('#second').removeClass('yellow flash animated');
+      $('#third').removeClass('yellow flash animated');
       if (!switchSides){
         $('.chats').prepend('<p>');
         ($('.chats p').eq(0)).text("user has " +userRuns+ ' runs and computer has ' + comRuns+' runs');
-        switchSides = true;
+        switchSides++;
       } else{
         $('.chats').prepend('<p>');
         ($('.chats p').eq(0)).text("user has "+ userRuns+' runs and computer has ' + comRuns+' runs');
-        switchSides = false;
+        switchSides--;
       }
-      runs= 0
+      var runs= 0
     }
-    if (!switchSides){
-      console.log(batter);
+    if (switchSides===0){
       userRuns+= runs;
       $('#bottom-score').text(userRuns);
     }else{
       comRuns+= runs;
       $('#top-score').text(comRuns);
     }
+    inning();
   };
   function userAtBat(){
     pitch(userChoice, computerInput());
