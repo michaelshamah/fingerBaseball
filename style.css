@@ -81,11 +81,12 @@ p {
   z-index: 1;
 }
 .chats{
-  min-height: 200px;
+  min-height: 300px;
+  max-height: 300px;
   bottom: 0;
   max-width: 80%;
-  overflow: auto;
-  background-color: rgb(127,127,127);
+  overflow: hidden;
+  background-color: rgba(127,127,127, .7);
   margin: 0 auto;
   color: white;
 }
@@ -112,6 +113,9 @@ p {
 .chats p{
   display: block;
   font-size: 15px;
+}
+.red{
+  color: red;
 }
 /*add a class for if a runner ison base and chane the color*/
 

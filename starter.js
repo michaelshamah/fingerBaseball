@@ -11,8 +11,7 @@ var comRuns= 0;
 var userRuns=0;
 var runs=0;
 var switchSides= false;
-//1. make a function to accept the input from the user
-//put in the chatbox
+
   function userInput(atBat){
     $('button').click(function(event) {
       var userChoices=[1, 2, 3, 4]
@@ -27,16 +26,104 @@ var switchSides= false;
       }
     });
   };
-//2. make a function to create a number from the computer
-  //put these things in the chatbox
+
   function computerInput(){
     var comChoice= (Math.floor(Math.random()*4)+1)
     return comChoice;
+  };
+  function inning(){
+    $('#inning-number').text("Top 1");
+    if (totalOuts%6===0 && totalOuts !== 0){
+      var inning= totalOuts/6;
+      $('#inning-number').text("Top "+inning);
+    } else if (totalOuts%3===0 && totalOuts !== 0){
+      var inning= totalOuts/3;
+      $('#inning-number').text("Bot "+inning);
+    }
+  }
+  function single(batter, pitcher){
+    if (batter===1){
+      console.log("single!");
+      $('.chats').prepend('<p>');
+      ($('.chats p').eq(0)).text("you both put out 1, batter hit a single! Each runner moves a base.");
+      if (runnerOnSecond){
+        $('#third').addClass('yellow');
+        $('#second').removeClass('yellow');
+      };
+      if (runnerOnFirst){
+        $('#second').addClass('yellow');
+        $('#first').removeClass('yellow');
+      };
+      $('#first').fadeIn().addClass('yellow');
+      if (runnerOnThird){
+        $('#third').removeClass('yellow');
+        return 1
+      };
+    }
   }
 
+  function double(batter, pitcher){
+    var runs=0
+   if (batter===2){
+      console.log("double!");
+      $('.chats').prepend('<p>');
+      ($('.chats p').eq(0)).text("you both put out 2, batter hit a double! Each runner moves two bases.");
+      if (runnerOnThird){
+        $('#third').removeClass('yellow')
+        runs+=1
+      }
+      if (runnerOnSecond){
+        runs+=1;
+        $('#second').removeClass('yellow');
+      } ;
+      if (runnerOnFirst){
+        $('#third').addClass('yellow');
+        $('#first').removeClass('yellow');
+      };
+      $('#second').addClass('yellow');
+      return runs;
+    }
+  }
+  function triple(batter, pitcher){
+    var runs=0
+    if (batter===3){
+      $('.chats').prepend('<p>');
+      ($('.chats p').eq(0)).text("you both put out 3, batter hit a triple! Each runner moves three bases.");
+      runs+=1
+      if (runnerOnSecond){
+        runs+=1;
+        $('#second').removeClass('yellow');
+      };
+      if (runnerOnFirst){
+        runs+=1;
+        $('#first').removeClass('yellow');
+      }
+    }
+    return runs
+  };
 
-//3. make a function that compares the two number and gives an out come
+  function homeRun(batter,pitcher){
+    var runs= 0
+    runs+=1
+    $('.chats').prepend('<p>');
+    ($('.chats p').eq(0)).text("you both put out 4, batter hit a Home Run! Everyone scores.");
+    if (runnerOnSecond){
+      runs+=1;
+      $('#second').removeClass('yellow');
+    };
+    if (runnerOnFirst){
+      runs+=1;
+      $('#first').removeClass('yellow');
+    }
+      if (runnerOnThird){
+      runs+=1;
+      $('#first').removeClass('yellow');
+      }
+      return runs
+  }
+
   function  pitch(batter, pitcher){
+    inning();
     if (switchSides){
       var switchSides=true
       var newPitcher=batter;
@@ -55,65 +142,13 @@ var switchSides= false;
     if (pitcher===batter){
       strikes=0;
       $('.strikes').removeClass('yellow');
-      if (runnerOnThird){
-        runs+=1;
-        $('#third').removeClass('yellow');
-      };
-      if (batter===1){
-        console.log("single!");
-        $('.chats').prepend('<p>');
-      ($('.chats p').eq(0)).text("you both put out 1, batter hit a single! Each runner moves a base.");
-        if (runnerOnSecond){
-          $('#third').addClass('yellow');
-          $('#second').removeClass('yellow');
-        };
-        if (runnerOnFirst){
-          $('#second').addClass('yellow');
-          $('#first').removeClass('yellow');
-        };
-        $('#first').fadeIn().addClass('yellow');
-      } else if (batter===2){
-        console.log("double!");
-        $('.chats').prepend('<p>');
-      ($('.chats p').eq(0)).text("you both put out 2, batter hit a double! Each runner moves two bases.");
-        if (runnerOnSecond){
-          runs+=1;
-          $('#second').removeClass('yellow');
-        } ;
-        if (runnerOnFirst){
-          $('#third').addClass('yellow');
-          $('#first').removeClass('yellow');
-        };
-        $('#second').addClass('yellow');
-      } else if (batter===3){
-        console.log("triple!");
-        $('.chats').prepend('<p>');
-      ($('.chats p').eq(0)).text("you both put out 3, batter hit a triple! Each runner moves three bases.");
-        $('#third').addClass('yellow');
-        if (runnerOnSecond){
-          runs+=1;
-          $('#second').removeClass('yellow');
-        };
-        if (runnerOnFirst){
-          runs+=1;
-          $('#first').removeClass('yellow');
-        };
-
-      } else {
-        console.log("Home Run!");
-        $('.chats').prepend('<p>');
-        ($('.chats p').eq(0)).text("you both put out 4, batter hit a Home Run! Everyone scores.");
-        if (runnerOnSecond){
-          runs+=1;
-          $('#second').removeClass('yellow');
-        };
-        if (runnerOnFirst){
-          runs+=1;
-          $('#first').addClass('yellow');
-        }
-        ;
+      runs+= single(batter, pitcher);
+      runs+= double(batter, pitcher);
+      runs+= triple(batter, pitcher);
+      if (batter===4){
+        runs+= homeRun(batter, pitcher);
       }
-    }else if (batter > pitcher) {
+    } else if (batter > pitcher) {
       var out3= false
       console.log (batter+ ' '+pitcher+ ' '+ 'out');
       $('.chats').prepend('<p>');
@@ -128,19 +163,19 @@ var switchSides= false;
       }
     } else{
       $('.chats').prepend('<p>');
-      ($('.chats p').eq(0)).text("The batter put out a "+ batter+ " and the pitcher put out a "+pitcher+" it's a strike.");
-      console.log (batter+ ' '+pitcher+ ' '+ 'strike');
+      ($('.chats p').eq(0)).text("The batter put out a "+ batter+ "  and the pitcher put out a "+pitcher+" it's a strike.");
       if ($('#strike2').hasClass('yellow')){
-        console.log("three strikes your out!");
+        $('.chats').prepend('<p>');
+        ($('.chats p').eq(0)).text("Three strikes you're out!")
         var strikes=0;
         $('.strikes').removeClass('yellow');
         if ($('#out1').hasClass('yellow') && (!($('#out2').hasClass('yellow')))){
-        $('#out2').addClass('yellow');
-      } else if ($('#out2').hasClass('yellow')){
+          $('#out2').addClass('yellow');
+        } else if ($('#out2').hasClass('yellow')){
         var out3= true
-      } else {
-        $('#out1').addClass('yellow');
-      }
+        } else {
+          $('#out1').addClass('yellow');
+        }
       }else{
         if ($('#strike1').hasClass('yellow')){
           $('#strike2').addClass('yellow');
@@ -158,69 +193,38 @@ var switchSides= false;
         ($('.chats p').eq(0)).text("Game over!");
         $('button').off();
       } else{
-        var strikes= 0;
-        $('#first').removeClass('yellow');
-        $('#second').removeClass('yellow');
-        $('#third').removeClass('yellow');
-        if (batter===userChoice){
-          userRuns+= runs;
-          $('.chats').prepend('<p>');
-        ($('.chats p').eq(0)).text("user has " +userRuns+ 'runs and computer has ' + comRuns+' runs');
-          var switchSides= true
-          return switchSides;
-        } else{
-          comRuns+= runs;
-          $('.chats').prepend('<p>');
-        ($('.chats p').eq(0)).text("user has "+ userRuns+ ' and computer has ' + comRuns);
-          return false;
-        }
-        runs= 0;
-        console.log("three outs switch sides!");
         $('.chats').prepend('<p>');
         ($('.chats p').eq(0)).text("three outs switch sides!");
-
+        var strikes= 0;
       }
+      $('#first').removeClass('yellow');
+      $('#second').removeClass('yellow');
+      $('#third').removeClass('yellow');
+      if (batter===userChoice){
+        userRuns+= runs;
+        $('.chats').prepend('<p>');
+        if (userRuns=== NaN){
+          var userRuns= 0;
+        }
+        ($('.chats p').eq(0)).text("user has " +userRuns+ ' runs and computer has ' + comRuns+' runs');
+        $('#bottom-score').text(userRuns);
+      } else{
+        comRuns+= runs;
+        $('.chats').prepend('<p>');
+        ($('.chats p').eq(0)).text("user has "+ userRuns+' runs and computer has ' + comRuns+' runs');
+        $('#top-score').text(comRuns);
+      }
+      var runs= 0
     }
-  }
+  };
   function userAtBat(){
     pitch(userChoice, computerInput());
-  }
+  };
   function comAtBat(){
     pitch(computerInput(), userChoice);
-  }
-  // if same number return what the hit was
-  // if pitcher was higher than batter give out
-  //if batter was higher than pitch give strike
-  //have all these things reflect on the scoreboard
-  //put thee things in the chatbox
-  //add the hit (single=1, double=2,triple=3, homerun=4) to the baserunners
-  // if the the base number is 4 or higher add a score
-  //else put the runners at the right base
-  //have it reflect on the scoreboard and field
-  //make function(or if else statment) that checks strikes and return if out or not
-
-//5. make a function that switches batter and pitcher
-  //every three outs switch the batter and pitcher
-  //have it refelct on the scoreboard
-  function innings(){
-    inNum= parseInt(prompt("before we start how many innnings would you like to play?"));
-    for(let i=0; i<= inNum; i++){
-      if(i % 2===0){
-        console.log("User at bat!"+ userRuns+' '+comRuns);
-        userRuns+= userInput(userAtBat);
-      } else{
-        console.log("Computer at bat!"+ userRuns+' '+comRuns);
-        comRuns+= userInput(comAtBat);
-      }
-    }
-    console.log("final score is" + " " + userRuns + " to " + comRuns)
-  }
+  };
 
 
-//6. make a function that checks to see who won
-  //after three innings check
-  //who ever has more runs they win
-  //alert the user know
 var inNum= parseInt(prompt("before we start how many innnings would you like to play?"))*6;
  userInput(userAtBat);
 
