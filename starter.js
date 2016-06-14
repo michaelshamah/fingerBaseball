@@ -10,7 +10,7 @@ var runnerOnThird=false;
 var comRuns= 0;
 var userRuns=0;
 var runs=0;
-var switchSides= false;
+var switchSides=false;
 
   function userInput(atBat){
     $('button').click(function(event) {
@@ -42,30 +42,12 @@ var switchSides= false;
     }
   }
 
-  function homeRun(batter,pitcher){
-    var runs= 0
-    runs+=1
-    $('.chats').prepend('<p>');
-    ($('.chats p').eq(0)).text("you both put out 4, batter hit a Home Run! Everyone scores.");
-    if (runnerOnSecond){
-      runs+=1;
-      $('#second').removeClass('yellow');
-    };
-    if (runnerOnFirst){
-      runs+=1;
-      $('#first').removeClass('yellow');
-    }
-      if (runnerOnThird){
-      runs+=1;
-      $('#first').removeClass('yellow');
-      }
-      return runs
-  }
 
   function  pitch(batter, pitcher){
+    runs= 0;
     inning();
     if (switchSides){
-      var switchSides=true
+      switchSides=true
       var newPitcher=batter;
       var batter=pitcher;
       var pitcher=newPitcher;
@@ -199,6 +181,11 @@ var switchSides= false;
       if (totalOuts===inNum){
         $('.chats').prepend('<p>');
         ($('.chats p').eq(0)).text("Game over!");
+        if (userRuns > comRuns){
+          ($('.chats p').eq(0)).text("What a win, you have bested the computer.");
+        } else{
+          ($('.chats p').eq(0)).text("Sorry, your skills could not match the computer. Better luck next time!");
+        }
         $('button').off();
       } else{
         $('.chats').prepend('<p>');
@@ -208,21 +195,24 @@ var switchSides= false;
       $('#first').removeClass('yellow');
       $('#second').removeClass('yellow');
       $('#third').removeClass('yellow');
-      if (batter===userChoice){
-        userRuns+= runs;
+      if (!switchSides){
         $('.chats').prepend('<p>');
-        if (userRuns=== NaN){
-          var userRuns= 0;
-        }
         ($('.chats p').eq(0)).text("user has " +userRuns+ ' runs and computer has ' + comRuns+' runs');
-        $('#bottom-score').text(userRuns);
+        switchSides = true;
       } else{
-        comRuns+= runs;
         $('.chats').prepend('<p>');
         ($('.chats p').eq(0)).text("user has "+ userRuns+' runs and computer has ' + comRuns+' runs');
-        $('#top-score').text(comRuns);
+        switchSides = false;
       }
-      var runs= 0
+      runs= 0
+    }
+    if (!switchSides){
+      console.log(batter);
+      userRuns+= runs;
+      $('#bottom-score').text(userRuns);
+    }else{
+      comRuns+= runs;
+      $('#top-score').text(comRuns);
     }
   };
   function userAtBat(){
