@@ -41,66 +41,6 @@ var switchSides= false;
       $('#inning-number').text("Bot "+inning);
     }
   }
-  function single(batter, pitcher){
-    if (batter===1){
-      console.log("single!");
-      $('.chats').prepend('<p>');
-      ($('.chats p').eq(0)).text("you both put out 1, batter hit a single! Each runner moves a base.");
-      if (runnerOnSecond){
-        $('#third').addClass('yellow');
-        $('#second').removeClass('yellow');
-      };
-      if (runnerOnFirst){
-        $('#second').addClass('yellow');
-        $('#first').removeClass('yellow');
-      };
-      $('#first').fadeIn().addClass('yellow');
-      if (runnerOnThird){
-        $('#third').removeClass('yellow');
-        return 1
-      };
-    }
-  }
-
-  function double(batter, pitcher){
-    var runs=0
-   if (batter===2){
-      console.log("double!");
-      $('.chats').prepend('<p>');
-      ($('.chats p').eq(0)).text("you both put out 2, batter hit a double! Each runner moves two bases.");
-      if (runnerOnThird){
-        $('#third').removeClass('yellow')
-        runs+=1
-      }
-      if (runnerOnSecond){
-        runs+=1;
-        $('#second').removeClass('yellow');
-      } ;
-      if (runnerOnFirst){
-        $('#third').addClass('yellow');
-        $('#first').removeClass('yellow');
-      };
-      $('#second').addClass('yellow');
-      return runs;
-    }
-  }
-  function triple(batter, pitcher){
-    var runs=0
-    if (batter===3){
-      $('.chats').prepend('<p>');
-      ($('.chats p').eq(0)).text("you both put out 3, batter hit a triple! Each runner moves three bases.");
-      runs+=1
-      if (runnerOnSecond){
-        runs+=1;
-        $('#second').removeClass('yellow');
-      };
-      if (runnerOnFirst){
-        runs+=1;
-        $('#first').removeClass('yellow');
-      }
-    }
-    return runs
-  };
 
   function homeRun(batter,pitcher){
     var runs= 0
@@ -142,12 +82,80 @@ var switchSides= false;
     if (pitcher===batter){
       strikes=0;
       $('.strikes').removeClass('yellow');
-      runs+= single(batter, pitcher);
-      runs+= double(batter, pitcher);
-      runs+= triple(batter, pitcher);
-      if (batter===4){
-        runs+= homeRun(batter, pitcher);
+
+      if (batter===1){
+        $('.chats').prepend('<p>');
+        ($('.chats p').eq(0)).text("you both put out 1, batter hit a single! Each runner moves a base.");
+        if (runnerOnSecond){
+          $('#third').addClass('yellow');
+          $('#second').removeClass('yellow');
+        };
+        if (runnerOnFirst){
+          $('#second').addClass('yellow');
+          $('#first').removeClass('yellow');
+        };
+        if (runnerOnThird){
+          $('#third').removeClass('yellow');
+        }
+        $('#first').addClass('yellow');
       }
+
+      if (batter===2){
+        $('.chats').prepend('<p>');
+        ($('.chats p').eq(0)).text("you both put out 2, batter hit a double! Each runner moves two bases.");
+        if (runnerOnThird){
+          $('#third').removeClass('yellow')
+          runs+=1
+        }
+        if (runnerOnSecond){
+          runs+=1;
+        $('#second').removeClass('yellow');
+        } ;
+        if (runnerOnFirst){
+          $('#third').addClass('yellow');
+          $('#first').removeClass('yellow');
+        };
+        $('#second').addClass('yellow');
+      }
+
+      if (batter===3){
+        $('#third').addClass('yellow');
+        $('.chats').prepend('<p>');
+        ($('.chats p').eq(0)).text("you both put out 3, batter hit a triple! Each runner moves three bases.");
+        runs+=1
+        if (runnerOnThird){
+          $('#third').removeClass('yellow')
+          runs+=1
+        }
+        if (runnerOnSecond){
+          runs+=1;
+          $('#second').removeClass('yellow');
+        };
+        if (runnerOnFirst){
+          runs+=1;
+          $('#first').removeClass('yellow');
+        }
+        $('#third').addClass('yellow');
+      }
+
+      if (batter===4){
+        runs+=1
+        $('.chats').prepend('<p>');
+        ($('.chats p').eq(0)).text("you both put out 4, batter hit a Home Run! Everyone scores.");
+        if (runnerOnSecond){
+          runs+=1;
+          $('#second').removeClass('yellow');
+        };
+        if (runnerOnFirst){
+          runs+=1;
+          $('#first').removeClass('yellow');
+        }
+        if (runnerOnThird){
+          runs+=1;
+        $('#first').removeClass('yellow');
+        }
+      }
+
     } else if (batter > pitcher) {
       var out3= false
       console.log (batter+ ' '+pitcher+ ' '+ 'out');
