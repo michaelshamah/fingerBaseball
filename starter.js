@@ -25,6 +25,20 @@ var switchSides=0;
         $('input').val("");
       }
     });
+    $('input').keypress(function(event) {
+      if (event.which == 13){
+        var userChoices=[1, 2, 3, 4]
+        userChoice=parseInt($('input').val());
+        if (userChoices.includes(userChoice)){
+           $('input').val("");
+           var runsAfterInning= atBat();
+           return runsAfterInning
+        } else{
+          alert(userChoice+ " is not a valid input! we only accpet a 1, 2, 3 or 4");
+          $('input').val("");
+        }
+      }
+    });
   };
 
   function computerInput(){
