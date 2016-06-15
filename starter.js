@@ -64,8 +64,7 @@ var switchSides=0;
 
 //The atual at bat what happens
   function  pitch(batter, pitcher){
-    //set the runs variable
-    var runs= 0;
+    var runs=0
     //get the inning
     inning();
     //see whose at bat
@@ -96,6 +95,7 @@ var switchSides=0;
         ($('.chats p').eq(0)).text("you both put out 1, batter hit a single! Each runner moves a base.");
         if (runnerOnThird){
           $('#third').removeClass('yellow flash animated');
+          runs+=1
         }
         if (runnerOnSecond){
           $('#third').addClass('yellow animate flash');
@@ -130,7 +130,6 @@ var switchSides=0;
         $('#third').addClass('yellow flash animated');
         $('.chats').prepend('<p>');
         ($('.chats p').eq(0)).text("you both put out 3, batter hit a triple! Each runner moves three bases.");
-        runs+=1
         if (runnerOnThird){
           $('#third').removeClass('yellow flash animated')
           runs+=1
@@ -160,7 +159,7 @@ var switchSides=0;
         }
         if (runnerOnThird){
           runs+=1;
-        $('#first').removeClass('yellow flash animated');
+        $('#third').removeClass('yellow flash animated');
         }
       }
     //if out
