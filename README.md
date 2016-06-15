@@ -57,5 +57,7 @@ http://stackoverflow.com/questions/6001149/how-to-execute-a-method-passed-as-par
 https://css-tricks.com/examples/ShapesOfCSS/
 -tought me how to make a diamond in css
 
+Used animate CSS, Skeleton and Jquery
+
 Celsete and Heide
 -helped me with my CSS and HTML. You guys are the coolest!
