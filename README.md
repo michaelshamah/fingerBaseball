@@ -38,6 +38,8 @@ As a user I would like to play the game of baseball.
 - 3 stikes per out and 3 outs per inning. 
 - Good Luck!
 
+##Installation
+Run http://michaelshamah.github.io/fingerBaseball/ in your browser and your good to go!
 
 ##Aproach Taken
 At first i believed that this would be a simple project as there werent to many variables to kkep track of. I reaized I was wrong as soon as I started psuedocoding when i realized the ariable multipiled the outcomes. It look many diffrent if statment to get through all the possiblites that the user could enter and the variables at play. It took me a long while to figure out how to switch off innings without usinga global variable but i got it too work using numbers.
